@@ -1,0 +1,90 @@
+
+<head>
+    <title>Process results</title>
+    <script type="text/javascript" src="../sortable.js"></script>
+    <link rel=stylesheet href="../mgstyle.css" type="text/css">
+</head>
+<body>
+<script type="text/javascript">
+function UrlExists(url) {
+  var http = new XMLHttpRequest();
+  http.open('HEAD', url, false);
+  try{
+     http.send()
+     }
+  catch(err){
+   return 1==2;
+  }
+  return http.status!=404;
+}
+function check_link(url,alt, id){
+    var obj = document.getElementById(id);
+    if ( ! UrlExists(url)){
+        if ( ! UrlExists(alt)){
+         obj.href = alt;
+         return true;
+        }
+       obj.href = alt;
+       return false;
+    }
+    obj.href = url;
+    return 1==1;
+}
+</script>
+  
+
+ <BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>s= 843 &#177 2.13 (pb)</b><br><br>
+<table class="sortable" id='tablesort'>
+<tr><th>Graph</th>
+    <th> Cross-Section</th>
+    <th>Error</th>
+    <th>Events (K)</th>
+    <th>Unwgt</th>
+    <th>Luminosity</th>
+</tr>
+
+<tr><td align=right>/home/lessa/simulationsSM/pp2epem/SubProcesses/P1_qq_ll</td>
+    <td align=right><a id="#/home/lessa/simulationsSM/pp2epem/SubProcesses/P1_qq_ll" href=#/home/lessa/simulationsSM/pp2epem/SubProcesses/P1_qq_ll onClick="check_link('#/home/lessa/simulationsSM/pp2epem/SubProcesses/P1_qq_ll','#/home/lessa/simulationsSM/pp2epem/SubProcesses/P1_qq_ll','#/home/lessa/simulationsSM/pp2epem/SubProcesses/P1_qq_ll')"> 843 </a> </td>
+    <td align=right>  2.13</td>
+    <td align=right>  166.324</td>
+    <td align=right>  15107.0</td>
+    <td align=right>  0</td>
+</tr>
+
+</table>
+</center>
+<br><br><br>
+ <dl>  
+
+ <BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>s= 843 &#177 2.13 (pb)</b><br><br>
+<table class="sortable" id='tablesort'>
+<tr><th>Graph</th>
+    <th> Cross-Section</th>
+    <th>Error</th>
+    <th>Events (K)</th>
+    <th>Unwgt</th>
+    <th>Luminosity</th>
+</tr>
+
+<tr><td align=right>G1</td>
+    <td align=right><a id="/home/lessa/simulationsSM/pp2epem/SubProcesses/P1_qq_ll/../../SubProcesses/P1_qq_ll/G1/run1_app.log" href=/home/lessa/simulationsSM/pp2epem/SubProcesses/P1_qq_ll/../../SubProcesses/P1_qq_ll/G1/run1_app.log onClick="check_link('/home/lessa/simulationsSM/pp2epem/SubProcesses/P1_qq_ll/../../SubProcesses/P1_qq_ll/G1/run1_app.log','../../SubProcesses/P1_qq_ll/G1/log.txt','/home/lessa/simulationsSM/pp2epem/SubProcesses/P1_qq_ll/../../SubProcesses/P1_qq_ll/G1/run1_app.log')"> 205.4 </a> </td>
+    <td align=right>  1.49</td>
+    <td align=right>  37.378</td>
+    <td align=right>  4704.0</td>
+    <td align=right>  22.9</td>
+</tr>
+
+<tr><td align=right>G2</td>
+    <td align=right><a id="/home/lessa/simulationsSM/pp2epem/SubProcesses/P1_qq_ll/../../SubProcesses/P1_qq_ll/G2/run1_app.log" href=/home/lessa/simulationsSM/pp2epem/SubProcesses/P1_qq_ll/../../SubProcesses/P1_qq_ll/G2/run1_app.log onClick="check_link('/home/lessa/simulationsSM/pp2epem/SubProcesses/P1_qq_ll/../../SubProcesses/P1_qq_ll/G2/run1_app.log','../../SubProcesses/P1_qq_ll/G2/log.txt','/home/lessa/simulationsSM/pp2epem/SubProcesses/P1_qq_ll/../../SubProcesses/P1_qq_ll/G2/run1_app.log')"> 637.6 </a> </td>
+    <td align=right>  1.52</td>
+    <td align=right>  128.946</td>
+    <td align=right>  10403.0</td>
+    <td align=right>  16.3</td>
+</tr>
+
+</table>
+</center>
+<br><br><br>
+ </dl></body>
