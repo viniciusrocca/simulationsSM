@@ -2,7 +2,6 @@
 A repository to store results of Monte Carlo simulation for the Standart Model.
 
 
-
 ## Basic Installation ##
 
 The following codes must be installed:
@@ -13,7 +12,10 @@ The following codes must be installed:
 
 The script installer.sh will try to fetch the appropriate tarballs and install them.
 
-Add new references.
+## Content ##
+
+In this repository each folder represents a single process generated with the Monte Carlo simulation. The folders contains the cards used to generate the process and some plots.
+
 
 
 
