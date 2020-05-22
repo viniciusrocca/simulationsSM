@@ -16,6 +16,12 @@ The script installer.sh will try to fetch the appropriate tarballs and install t
 
 In this repository each folder represents a single process generated with the Monte Carlo simulation. The folders contains the cards used to generate the process and some plots.
 
+## Objectives ## 
+
+  * Store process used to understand some characteristics of Standart Model
+
+  * The process (p p > h, h > a a) in specifc, was generated with MadGraph5 and a simplified Monte Carlo simulator [toyGenerator](https://github.com/viniciusrocca/toyGenerator) for a comparision.
+
 
 
 
