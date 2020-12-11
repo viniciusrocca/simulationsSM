@@ -10,6 +10,7 @@
 
 #include "Pythia8/Pythia.h"
 #include <stdio.h>
+#include "lheEventWriter.h"
 
 using namespace Pythia8;
 int main() {
@@ -21,26 +22,26 @@ int main() {
   pythia.init();
   Hist mult("charged multiplicity", 100, -0.5, 799.5);
   // Begin event loop. Generate event. Skip if error. List first one.
-	
+
   FILE* arquivo = fopen("ChargeMultiplicity
 			.lhe", "w");
   fprintf(arquivo, "<LesHouchesEvents>\n");
-  
-	
+
+
   for (int iEvent = 0; iEvent < 100; ++iEvent) {
     if (!pythia.next()) continue;
-	  
+
 	//Writing the <event> tag.
 	fprintf(arquivo, "<event>\n");
 	int eventSize = pythia.event.size();
 	fprintf(arquivo, " %d      1 1 1 1 1\n", eventSize);
-		
-	
-	
-	  
+
+
+
+
     for (int i = 0; i < pythia.event.size(); ++i) {
       //LHE columns.
-      
+
       int id = pythia.event[i].id();
       int status = pythia.event[i].status();
 	  int mother1 = pythia.event[i].mother1();
@@ -54,12 +55,12 @@ int main() {
 	  double mass = pythia.event[i].m();
 	  double prop_time = pythia.event[i].tau();
 	  double spin = pythia.event[i].pol();
-    
-     
-      
-    
+
+
+
+
       //Writing data into the file.
-      fprintf(arquivo, "        %d ", id); 
+      fprintf(arquivo, "        %d ", id);
 	  fprintf(arquivo, "%d ", status);
 	  fprintf(arquivo, "%d ", mother1);
 	  fprintf(arquivo, "%d ", mother2);
@@ -72,24 +73,28 @@ int main() {
 	  fprintf(arquivo, "%e ", mass);
 	  fprintf(arquivo, "%e ", prop_time);
 	  fprintf(arquivo, "%e\n", spin);
-    
-     
-      
+
+
+
 	}
 	//Writing the </event> tag.
-	
+
 	fprintf(arquivo, "</event>\n");
-	
+
   // End of event loop
-    
+
   }
-	
-  
+
+
   fprintf(arquivo, "</LesHouchesEvents>\n");
   fclose(arquivo);
-	
+
   pythia.stat();
-  cout << mult;
+  // cout << mult;
+
+  HistPlot hpl("Multiplicity");
+  hpl.plotFrame( "Ncharge",mult);
+
   return 0;
-  
+
 }
