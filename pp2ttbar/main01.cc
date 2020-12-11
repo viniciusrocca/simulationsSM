@@ -22,7 +22,8 @@ int main() {
   Hist mult("charged multiplicity", 100, -0.5, 799.5);
   // Begin event loop. Generate event. Skip if error. List first one.
 	
-  FILE* arquivo = fopen("pp_2_ttbar.lhe", "w");
+  FILE* arquivo = fopen("ChargeMultiplicity
+			.lhe", "w");
   fprintf(arquivo, "<LesHouchesEvents>\n");
   
 	
