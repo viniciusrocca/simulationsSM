@@ -22,22 +22,24 @@ int main() {
   Hist mult("charged multiplicity", 100, -0.5, 799.5);
   // Begin event loop. Generate event. Skip if error. List first one.
 	
-  FILE* arquivo4 = fopen("saida.txt", "w");
-  fprintf(arquivo4, "<LesHouchesEvents>\n");
-  fclose(arquivo4);
+  FILE* arquivo = fopen("pp_2_ttbar.lhe", "w");
+  fprintf(arquivo, "<LesHouchesEvents>\n");
+  
 	
   for (int iEvent = 0; iEvent < 100; ++iEvent) {
     if (!pythia.next()) continue;
 	  
 	//Writing the <event> tag.
-	FILE* arquivo = fopen("saida.txt", "a+");
 	fprintf(arquivo, "<event>\n");
+	int eventSize = pythia.event.size();
+	fprintf(arquivo, " %d      1 1 1 1 1\n", eventSize);
+		
 	
-	fclose(arquivo);
 	
 	  
     for (int i = 0; i < pythia.event.size(); ++i) {
       //LHE columns.
+      
       int id = pythia.event[i].id();
       int status = pythia.event[i].status();
 	  int mother1 = pythia.event[i].mother1();
@@ -52,38 +54,38 @@ int main() {
 	  double prop_time = pythia.event[i].tau();
 	  double spin = pythia.event[i].pol();
     
-      //Opening the file.
-      FILE* arquivo1 = fopen("saida.txt", "a+");
+     
+      
     
-      //Writing into the file.
-      fprintf(arquivo1, "%d ", id); 
-	  fprintf(arquivo1, "%d ", status);
-	  fprintf(arquivo1, "%d ", mother1);
-	  fprintf(arquivo1, "%d ", mother2);
-	  fprintf(arquivo1, "%d ", color1);
-	  fprintf(arquivo1, "%d ", color2);
-	  fprintf(arquivo1, "%e ", p_1);
-	  fprintf(arquivo1, "%e ", p_2);
-	  fprintf(arquivo1, "%e ", p_3);
-	  fprintf(arquivo1, "%e ", p_0);
-	  fprintf(arquivo1, "%e ", mass);
-	  fprintf(arquivo1, "%e ", prop_time);
-	  fprintf(arquivo1, "%e\n", spin);
+      //Writing data into the file.
+      fprintf(arquivo, "        %d ", id); 
+	  fprintf(arquivo, "%d ", status);
+	  fprintf(arquivo, "%d ", mother1);
+	  fprintf(arquivo, "%d ", mother2);
+	  fprintf(arquivo, "%d ", color1);
+	  fprintf(arquivo, "%d ", color2);
+	  fprintf(arquivo, "%e ", p_1);
+	  fprintf(arquivo, "%e ", p_2);
+	  fprintf(arquivo, "%e ", p_3);
+	  fprintf(arquivo, "%e ", p_0);
+	  fprintf(arquivo, "%e ", mass);
+	  fprintf(arquivo, "%e ", prop_time);
+	  fprintf(arquivo, "%e\n", spin);
     
-      //Closing the file.
-      fclose(arquivo1);
+     
+      
 	}
 	//Writing the </event> tag.
-	FILE* arquivo2 = fopen("saida.txt", "a+");
-	fprintf(arquivo2, "</event>\n");
-	fclose(arquivo2);
-  // End of event loop. Statistics. Histogram. Done.
+	
+	fprintf(arquivo, "</event>\n");
+	
+  // End of event loop
     
   }
 	
-  FILE* arquivo3 = fopen("saida.txt", "a+");
-  fprintf(arquivo3, "</LesHouchesEvents>\n");
-  fclose(arquivo3);
+  
+  fprintf(arquivo, "</LesHouchesEvents>\n");
+  fclose(arquivo);
 	
   pythia.stat();
   cout << mult;
