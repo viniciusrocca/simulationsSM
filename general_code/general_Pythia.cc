@@ -12,43 +12,43 @@ int run(const string & infile, int nevents, const string & cfgfile, const string
 	Pythia pythia;
 	std::srand(500);
 	string outname;
-	
+
 	//Setting the output name
 	if (outputfile == "") {
 		size_t lastindex = infile.find_last_of(".");
 		outname = infile.substr(0, lastindex)+".out";
 	}
 	else{outname = outputfile;}
-	
+
 	//Avoiding negative number of events
 	if ( nevents < 0) {
     	nevents = 100;
     	cout << "Negative number of events for SLHA input. Setting nevents to " << nevents << endl;
     }
-	
+
 	//Reading the configuration file
 	pythia.readFile(cfgfile);
-	
+
 	//Setting the frame type
 	pythia.readString("Beams:frameType = 4");
-	
+
 	//Reading the input .lhe file
     pythia.readString("Beams:LHEF = " + infile);
-	
+
 	//Initialize
 	pythia.init();
-	
+
 	int nPass = 0;
 	int iAbort = 0;
-	
+
 	//Opening the output file:
 	FILE* OutputFile = fopen(outname.c_str(), "w");
 	int a = initLHEOutput(OutputFile);
-	
-	
+
+
 	// Begin event loop.
 	int iEvent = 0;
-	
+
 	while (iEvent < nevents or nevents < 0) {
 
 		 // If failure because reached end of file then exit event loop.
@@ -60,21 +60,20 @@ int run(const string & infile, int nevents, const string & cfgfile, const string
 			 cout << " Event generation aborted prematurely, owing to error!\n";
 			 break;
 		 }
-		
-		for (int i = 0; i < pythia.event.size(); ++i) {
-			a =  writeLHEevent(OutputFile, pythia.event, i);
-		}
-		
+
+
+		a =  writeLHEevent(OutputFile, pythia.event);
+
 		 ++iEvent;
-	
+
 	}
 	// End of event loop.
-	
+
 	//Closing the output file:
 	a = closeLHEOutput(OutputFile);
 	fclose(OutputFile);
-	
-	
+
+
 }
 void help( const char * name )
 {
@@ -117,7 +116,7 @@ int main( int argc, const char * argv[] ) {
 			i++;
 			continue;
 		}
-		
+
 		if ( s== "-o" )
 		{
 			if ( argc < i+2 ) help ( argv[0] );
@@ -142,8 +141,8 @@ int main( int argc, const char * argv[] ) {
 	};
 
 	int r = run(infile, nevents, cfgfile, outfile );
-	
-	
+
+
 
 
 	return 0;

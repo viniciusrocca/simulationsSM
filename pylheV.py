@@ -7,6 +7,21 @@ import subprocess
 import numpy as np
 
 
+with open("particles.xml") as f:
+    xmlStr = f.read()
+    xmlStr = "<root>\n" + xmlStr[:] + "</root>"
+root = ET.fromstring(xmlStr)
+particlesDict = {}
+for particle in root:
+    particleData  = particle.attrib
+    pid = int(particleData['id'])
+    particlesDict[pid] = {}
+    for attr,val in particle.attrib.items():
+        try:
+            particlesDict[pid][attr] = eval(val) #Try to evaluate attribute
+        except:
+            particlesDict[pid][attr] = val
+
 class LHEFile(object):
     def __init__(self):
         pass
@@ -38,7 +53,6 @@ class LHEEventInfo(object):
     def fromstring(cls, string):
         return cls(**dict(zip(cls.fieldnames, map(float, string.split()))))
 
-
 class LHEParticle(object):
     fieldnames = fieldnames = [
         "id",
@@ -61,8 +75,14 @@ class LHEParticle(object):
             raise RuntimeError
         for k, v in kwargs.items():
             setattr(self, k, v)
-        
-		
+        self.label = particlesDict[abs(self.id)]['name']
+        if self.id != abs(self.id):
+            self.label += '~'
+
+    def __str__(self):
+        return self.label
+    def __repr__(self):
+        return str(self)
 
     @classmethod
     def fromstring(cls, string):
@@ -77,29 +97,14 @@ class LHEParticle(object):
             if idx >= 0:
                 mothers.append(self.event.particles[idx])
         return mothers
-    
+
     def pT(self):
         return (self.px**2 + self.py**2)**0.5
-    
+
     def pseudorapidity(self):
         p = (self.px**2 + self.py**2 + self.pz**2)**0.5
         y = 0.5*np.log((p+self.pz)/(p-self.pz))
-        return y  
-	
-    def set_daughters(self):
-        particles = self.event.particles
-        for i in range(len(particles)):
-            particles[i].daughters =  []
-		
-        for i in range(len(particles)):
-            if particles[i].mother1 !=0:
-                mother1_idx = int(particles[i].mother1)-1
-                particles[mother1_idx].daughters.append(i)
-            if particles[i].mother2 !=0:
-                mother2_idx = int(particles[i].mother2)-1
-                particles[mother2_idx].daughters.append(i)										  
-		
-        return self.daughters
+        return y
 
 class LHEInit(dict):
     """Store the <init> block as dict."""
@@ -184,6 +189,19 @@ def readLHEInit(thefile):
             break
     return initDict
 
+def set_daughters(particles):
+    for ptc in particles:
+        ptc.daughters = []
+
+    for i in range(len(particles)):
+        if particles[i].mother1 !=0:
+            mother1_idx = int(particles[i].mother1)-1
+            particles[mother1_idx].daughters.append(i)
+        if particles[i].mother2 !=0:
+            mother2_idx = int(particles[i].mother2)-1
+            particles[mother2_idx].daughters.append(i)
+
+    return particles
 
 def readLHE(thefile):
     try:
@@ -195,6 +213,9 @@ def readLHE(thefile):
                 particle_objs = []
                 for p in particles:
                     particle_objs += [LHEParticle.fromstring(p)]
+
+                particle_objs = set_daughters(particle_objs)
+
                 yield LHEEvent(eventinfo, particle_objs)
     except ET.ParseError:
         print("WARNING. Parse Error.")
