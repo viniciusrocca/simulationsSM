@@ -1,5 +1,5 @@
 # simulationsSM
-A repository to store results of Monte Carlo simulation for the Standart Model.
+A repository to store results of Monte Carlo simulation for the Standard Model.
 
 
 ## Basic Installation ##
@@ -18,7 +18,7 @@ In this repository each folder represents a single process generated with the Mo
 
 ## Objectives ## 
 
-  * Store process used to understand some characteristics of Standart Model
+  * Store process used to understand some characteristics of Standard Model
 
   * The process (p p > h, h > a a) in specifc, was generated with MadGraph5 and a simplified Monte Carlo simulator [toyGenerator](https://github.com/viniciusrocca/toyGenerator) for a comparision.
 
